@@ -15,7 +15,8 @@
   "author": "Emin Dabakhov",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "tslog": "^4.9.3"
   },
   "devDependencies": {
     "@types/express": "^4.17.21"
