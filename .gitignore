@@ -1,7 +1,7 @@
 /node_modules
+/.idea
 /dist
 /.clinic
 /.env
 /prisma/dev.db
 /prisma/dev.db-journal
-/.idea
