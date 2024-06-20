@@ -1,8 +1,10 @@
-import { Request, Response, NextFunction, Router } from "express";
+import { Request, Response, NextFunction, Router } from 'express';
 
 export interface IControllerRoute {
-  path: string;
-  function: (req: Request, res: Response, next: NextFunction) => void;
-  // method: "get" | "post" | "delete" | "put";
-  method: keyof Pick<Router, "get" | "post" | "delete" | "put">;
+	path: string;
+	function: (req: Request, res: Response, next: NextFunction) => void;
+	// method: "get" | "post" | "delete" | "put";
+	method: keyof Pick<Router, 'get' | 'post' | 'delete' | 'put'>;
 }
+
+export type ExpressReturnType = Response<any, Record<string, any>>;
