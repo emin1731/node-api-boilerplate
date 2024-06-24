@@ -9,10 +9,14 @@ import { IUsersController } from './users.controller.interface';
 import { UserLoginDto } from './dto/user.login.dto';
 import { UserRegisterDto } from './dto/user.register.dto';
 import { User } from './user.entity';
+import { UsersService } from './users.service';
 
 @injectable()
 export class UsersController extends BaseController implements IUsersController {
-	constructor(@inject(TYPES.ILogger) private loggerService: ILogger) {
+	constructor(
+		@inject(TYPES.ILogger) private loggerService: ILogger,
+		@inject(TYPES.UserService) private userService: UsersService,
+	) {
 		super(loggerService);
 		this.bindRoutes([
 			{
@@ -39,8 +43,11 @@ export class UsersController extends BaseController implements IUsersController 
 		res: Response,
 		next: NextFunction,
 	): Promise<void> {
-		const newUser = new User(body.email, body.name);
-		await newUser.setPassword(body.password);
-		this.ok(res, newUser);
+		const result = await this.userService.createUser(body);
+		if (!result) {
+			return next(new HTTPError('The user is already exists', 422));
+		}
+
+		this.ok(res, { email: result.email });
 	}
 }
