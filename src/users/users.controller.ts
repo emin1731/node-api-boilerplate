@@ -10,6 +10,7 @@ import { UserLoginDto } from './dto/user.login.dto';
 import { UserRegisterDto } from './dto/user.register.dto';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
+import { ValidateMiddleware } from '../common/validate.moddleware';
 
 @injectable()
 export class UsersController extends BaseController implements IUsersController {
@@ -23,11 +24,13 @@ export class UsersController extends BaseController implements IUsersController 
 				path: '/login',
 				method: 'post',
 				function: this.login,
+				middleware: [new ValidateMiddleware(UserLoginDto)],
 			},
 			{
 				path: '/register',
 				method: 'post',
 				function: this.register,
+				middleware: [new ValidateMiddleware(UserRegisterDto)],
 			},
 		]);
 	}
