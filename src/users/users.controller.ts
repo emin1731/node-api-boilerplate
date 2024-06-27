@@ -35,10 +35,18 @@ export class UsersController extends BaseController implements IUsersController 
 		]);
 	}
 
-	login(req: Request<{}, {}, UserLoginDto>, res: Response, next: NextFunction): void {
-		console.log(req.body);
-
-		this.ok(res, 'Login');
+	async login(
+		{ body }: Request<{}, {}, UserLoginDto>,
+		res: Response,
+		next: NextFunction,
+	): Promise<void> {
+		const result = await this.userService.validateUser(body);
+		if (!result) {
+			return next(new HTTPError('Authorization error', 401, 'login'));
+		} else {
+			this.loggerService.warn('Validation is failed ');
+		}
+		this.ok(res, {});
 	}
 
 	async register(
