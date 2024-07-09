@@ -1,3 +1,4 @@
+import { UserModel } from '@prisma/client';
 import { compare, hash } from 'bcryptjs';
 
 export class User {
