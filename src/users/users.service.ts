@@ -16,8 +16,7 @@ export class UsersService implements IUsersService {
 	) {}
 	async createUser({ name, email, password }: UserRegisterDto): Promise<UserModel | null> {
 		const newUser = new User(email, name);
-		const salt = this.configService.get('SALT');
-		await newUser.setPassword(password, Number(salt));
+		await newUser.setPassword(password, +this.configService.get('SALT'));
 		const existedUser = await this.usersRepository.find(email);
 		if (existedUser) {
 			return null;
